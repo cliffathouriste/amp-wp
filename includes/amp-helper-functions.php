@@ -312,6 +312,10 @@ function is_amp_endpoint() {
 		return true;
 	}
 
+	if ( is_singular( AMP_Story_Post_Type::POST_TYPE_SLUG ) ) {
+		return true;
+	}
+
 	return false;
 }
 

@@ -17,7 +17,7 @@ class AMP_Post_Type_Support {
 	 * @return string[] Post types.
 	 */
 	public static function get_builtin_supported_post_types() {
-		return array_filter( array( 'post' ), 'post_type_exists' );
+		return array_filter( array( 'post', AMP_Story_Post_Type::POST_TYPE_SLUG ), 'post_type_exists' );
 	}
 
 	/**
@@ -27,7 +27,7 @@ class AMP_Post_Type_Support {
 	 * @return string[] Post types eligible for AMP.
 	 */
 	public static function get_eligible_post_types() {
-		return array_merge(
+		return array_unique( array_merge(
 			self::get_builtin_supported_post_types(),
 			array( 'page' ),
 			array_values( get_post_types(
@@ -37,7 +37,7 @@ class AMP_Post_Type_Support {
 				),
 				'names'
 			) )
-		);
+		) );
 	}
 
 	/**

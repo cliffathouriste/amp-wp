@@ -196,7 +196,7 @@ class AMP_Theme_Support {
 		$has_query_var = false !== get_query_var( amp_get_slug(), false ); // May come from URL param or endpoint slug.
 		$has_url_param = isset( $_GET[ amp_get_slug() ] ); // WPCS: CSRF OK.
 
-		if ( amp_is_canonical() ) {
+		if ( amp_is_canonical() || is_singular( AMP_Story_Post_Type::POST_TYPE_SLUG ) ) {
 			/*
 			 * When AMP native/canonical, then when there is an /amp/ endpoint or ?amp URL param,
 			 * then a redirect needs to be done to the URL without any AMP indicator in the URL.
@@ -745,7 +745,7 @@ class AMP_Theme_Support {
 	 * @return string Template to include.
 	 */
 	public static function filter_paired_template_include( $template ) {
-		if ( empty( $template ) || ! self::is_paired_available() ) {
+		if ( ! is_singular( AMP_Story_Post_Type::POST_TYPE_SLUG ) && ( empty( $template ) || ! self::is_paired_available() ) ) {
 			wp_safe_redirect( self::get_current_canonical_url(), 302 ); // Temporary redirect because support may come later.
 			exit;
 		}
